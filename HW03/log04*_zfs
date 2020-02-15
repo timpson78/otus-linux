@@ -1,0 +1,401 @@
+Script started on Sat 15 Feb 2020 06:26:57 PM UTC
+[vagrant@lvm ~]$ lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk
+├─sda1                       8:1    0    1M  0 part
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:7    0    2G  0 lvm  /home
+sdb                          8:16   0   10G  0 disk
+├─sdb1                       8:17   0   10G  0 part
+└─sdb9                       8:25   0    8M  0 part
+sdc                          8:32   0    2G  0 disk
+├─vg_var-lv_var_rmeta_0    253:2    0    4M  0 lvm
+│ └─vg_var-lv_var          253:6    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0   253:3    0  952M  0 lvm
+  └─vg_var-lv_var          253:6    0  952M  0 lvm  /var
+sdd                          8:48   0    1G  0 disk
+├─vg_var-lv_var_rmeta_1    253:4    0    4M  0 lvm
+│ └─vg_var-lv_var          253:6    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1   253:5    0  952M  0 lvm
+  └─vg_var-lv_var          253:6    0  952M  0 lvm  /var
+sde                          8:64   0    1G  0 disk
+├─sde1                       8:65   0 1014M  0 part
+└─sde9                       8:73   0    8M  0 part
+[vagrant@lvm ~]$ lsmod | grep zfs
+zfs                  3564468  0
+zunicode              331170  1 zfs
+zavl                   15236  1 zfs
+icp                   270148  1 zfs
+zcommon                73440  1 zfs
+znvpair                89131  2 zfs,zcommon
+spl                   102412  4 icp,zfs,zcommon,znvpair
+[vagrant@lvm ~]$ zpool cretae -f mypool mirror sdc sde
+unrecognized command 'cretae'
+usage: zpool command args ...
+where 'command' is one of the following:
+
+        create [-fnd] [-o property=value] ...
+            [-O file-system-property=value] ...
+            [-m mountpoint] [-R root] <pool> <vdev> ...
+        destroy [-f] <pool>
+
+        add [-fgLnP] [-o property=value] <pool> <vdev> ...
+        remove <pool> <device> ...
+
+        labelclear [-f] <vdev>
+
+        list [-gHLpPv] [-o property[,...]] [-T d|u] [pool] ... [interval [count]                                                                                                                                                             ]
+        iostat [[[-c [script1,script2,...][-lq]]|[-rw]] [-T d | u] [-ghHLpPvy]
+            [[pool ...]|[pool vdev ...]|[vdev ...]] [interval [count]]
+        status [-c [script1,script2,...]] [-gLPvxD][-T d|u] [pool] ... [interval                                                                                                                                                              [count]]
+
+        online <pool> <device> ...
+        offline [-f] [-t] <pool> <device> ...
+        clear [-nF] <pool> [device]
+        reopen <pool>
+
+        attach [-f] [-o property=value] <pool> <device> <new-device>
+        detach <pool> <device>
+        replace [-f] [-o property=value] <pool> <device> [new-device]
+        split [-gLnP] [-R altroot] [-o mntopts]
+            [-o property=value] <pool> <newpool> [<device> ...]
+
+        scrub [-s | -p] <pool> ...
+
+        import [-d dir] [-D]
+        import [-d dir | -c cachefile] [-F [-n]] <pool | id>
+        import [-o mntopts] [-o property=value] ...
+            [-d dir | -c cachefile] [-D] [-f] [-m] [-N] [-R root] [-F [-n]] -a
+        import [-o mntopts] [-o property=value] ...
+            [-d dir | -c cachefile] [-D] [-f] [-m] [-N] [-R root] [-F [-n]]
+            <pool | id> [newpool]
+        export [-af] <pool> ...
+        upgrade
+        upgrade -v
+        upgrade [-V version] <-a | pool ...>
+        reguid <pool>
+
+        history [-il] [<pool>] ...
+        events [-vHfc]
+
+        get [-Hp] [-o "all" | field[,...]] <"all" | property[,...]> <pool> ...
+        set <property=value> <pool>
+        sync [pool] ...
+[vagrant@lvm ~]$ sudo zpool cretae -f mypool mirror sdc sde
+unrecognized command 'cretae'
+usage: zpool command args ...
+where 'command' is one of the following:
+
+        create [-fnd] [-o property=value] ...
+            [-O file-system-property=value] ...
+            [-m mountpoint] [-R root] <pool> <vdev> ...
+        destroy [-f] <pool>
+
+        add [-fgLnP] [-o property=value] <pool> <vdev> ...
+        remove <pool> <device> ...
+
+        labelclear [-f] <vdev>
+
+        list [-gHLpPv] [-o property[,...]] [-T d|u] [pool] ... [interval [count]                                                                                                                                                             ]
+        iostat [[[-c [script1,script2,...][-lq]]|[-rw]] [-T d | u] [-ghHLpPvy]
+            [[pool ...]|[pool vdev ...]|[vdev ...]] [interval [count]]
+        status [-c [script1,script2,...]] [-gLPvxD][-T d|u] [pool] ... [interval                                                                                                                                                              [count]]
+
+        online <pool> <device> ...
+        offline [-f] [-t] <pool> <device> ...
+        clear [-nF] <pool> [device]
+        reopen <pool>
+
+        attach [-f] [-o property=value] <pool> <device> <new-device>
+        detach <pool> <device>
+        replace [-f] [-o property=value] <pool> <device> [new-device]
+        split [-gLnP] [-R altroot] [-o mntopts]
+            [-o property=value] <pool> <newpool> [<device> ...]
+
+        scrub [-s | -p] <pool> ...
+
+        import [-d dir] [-D]
+        import [-d dir | -c cachefile] [-F [-n]] <pool | id>
+        import [-o mntopts] [-o property=value] ...
+            [-d dir | -c cachefile] [-D] [-f] [-m] [-N] [-R root] [-F [-n]] -a
+        import [-o mntopts] [-o property=value] ...
+            [-d dir | -c cachefile] [-D] [-f] [-m] [-N] [-R root] [-F [-n]]
+            <pool | id> [newpool]
+        export [-af] <pool> ...
+        upgrade
+        upgrade -v
+        upgrade [-V version] <-a | pool ...>
+        reguid <pool>
+
+        history [-il] [<pool>] ...
+        events [-vHfc]
+
+        get [-Hp] [-o "all" | field[,...]] <"all" | property[,...]> <pool> ...
+        set <property=value> <pool>
+        sync [pool] ...
+[vagrant@lvm ~]$ sudo zpool create -f mypool mirror sdc sde
+/dev/sdc is in use and contains a LVM2_member filesystem.
+[vagrant@lvm ~]$ sudo zpool create -f mypool mirror sdb sde
+[vagrant@lvm ~]$ zpool list
+NAME     SIZE  ALLOC   FREE  EXPANDSZ   FRAG    CAP  DEDUP  HEALTH  ALTROOT
+mypool  1008M   460K  1008M         -     0%     0%  1.00x  ONLINE  -
+[vagrant@lvm ~]$ zpool status
+  pool: mypool
+ state: ONLINE
+  scan: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            sdb     ONLINE       0     0     0
+            sde     ONLINE       0     0     0
+
+errors: No known data errors
+[vagrant@lvm ~]$ zfs create mypool/opt -o mountpoint=/opt
+cannot create 'mypool/opt': permission denied
+[vagrant@lvm ~]$ sudo zfs create mypool/opt -o mountpoint=/opt
+[vagrant@lvm ~]$ zfs list -r mypool
+NAME         USED  AVAIL  REFER  MOUNTPOINT
+mypool       122K   880M    24K  /mypool
+mypool/opt    24K   880M    24K  /opt
+[vagrant@lvm ~]$ zfs snapshot mypool/test1@version1
+cannot open 'mypool/test1': dataset does not exist
+usage:
+        snapshot|snap [-r] [-o property=value] ... <filesystem|volume>@<snap> ..                                                                                                                                                             .
+
+For the property list, run: zfs set|get
+
+For the delegated permission list, run: zfs allow|unallow
+[vagrant@lvm ~]$ sudo zfs snapshot mypool/test1@version1
+cannot open 'mypool/test1': dataset does not exist
+usage:
+        snapshot|snap [-r] [-o property=value] ... <filesystem|volume>@<snap> ..                                                                                                                                                             .
+
+For the property list, run: zfs set|get
+
+For the delegated permission list, run: zfs allow|unallow
+[vagrant@lvm ~]$ sudo zfs snapshot mypool/opt@version1
+[vagrant@lvm ~]$ zfs list -t snapshot
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool/opt@version1     0B      -    24K  -
+[vagrant@lvm ~]$ sudo zfs snapshot mypool/opt@version2
+[vagrant@lvm ~]$ zfs list -t snapshot
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool/opt@version1     0B      -    24K  -
+mypool/opt@version2     0B      -    24K  -
+[vagrant@lvm ~]$ echo "test">/opt/data1
+bash: /opt/data1: Permission denied
+[vagrant@lvm ~]$ sudo -r
+sudo: option requires an argument -- 'r'
+usage: sudo -h | -K | -k | -V
+usage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user]
+            [command]
+usage: sudo [-AbEHknPS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] file ...
+[vagrant@lvm ~]$ sudo -p
+sudo: option requires an argument -- 'p'
+usage: sudo -h | -K | -k | -V
+usage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user]
+            [command]
+usage: sudo [-AbEHknPS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p
+            prompt] [-u user] file ...
+[vagrant@lvm ~]$ sudo -s
+[root@lvm vagrant]# echo "test">/opt/data1
+[root@lvm vagrant]# ls -l /opt/
+total 1
+-rw-r--r--. 1 root root 5 Feb 15 18:36 data1
+[root@lvm vagrant]# exit
+exit
+[vagrant@lvm ~]$ zfs list -t snapshot
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool/opt@version1     0B      -    24K  -
+mypool/opt@version2     0B      -    24K  -
+[vagrant@lvm ~]$ sudo zfs snapshot mypool/opt@version3
+[vagrant@lvm ~]$ zfs list -t snapshot
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool/opt@version1     0B      -    24K  -
+mypool/opt@version2     0B      -    24K  -
+mypool/opt@version3     0B      -    26K  -
+[vagrant@lvm ~]$ sudo -s
+[root@lvm vagrant]# echo "test add data">>/opt/data1
+[root@lvm vagrant]# exit
+exit
+[vagrant@lvm ~]$ zfs list -t snapshot
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool/opt@version1     0B      -    24K  -
+mypool/opt@version2     0B      -    24K  -
+mypool/opt@version3  13.5K      -    26K  -
+[vagrant@lvm ~]$ zfs rollback mypool/opt@version2
+cannot rollback to 'mypool/opt@version2': more recent snapshots or bookmarks exi                                                                                                                                                             st
+use '-r' to force deletion of the following snapshots and bookmarks:
+mypool/opt@version3
+[vagrant@lvm ~]$ sudo zfs -r rollback mypool/opt@version2
+unrecognized command '-r'
+usage: zfs command args ...
+where 'command' is one of the following:
+
+        create [-p] [-o property=value] ... <filesystem>
+        create [-ps] [-b blocksize] [-o property=value] ... -V <size> <volume>
+        destroy [-fnpRrv] <filesystem|volume>
+        destroy [-dnpRrv] <filesystem|volume>@<snap>[%<snap>][,...]
+        destroy <filesystem|volume>#<bookmark>
+
+        snapshot|snap [-r] [-o property=value] ... <filesystem|volume>@<snap> ..                                                                                                                                                             .
+        rollback [-rRf] <snapshot>
+        clone [-p] [-o property=value] ... <snapshot> <filesystem|volume>
+        promote <clone-filesystem>
+        rename [-f] <filesystem|volume|snapshot> <filesystem|volume|snapshot>
+        rename [-f] -p <filesystem|volume> <filesystem|volume>
+        rename -r <snapshot> <snapshot>
+        bookmark <snapshot> <bookmark>
+
+        list [-Hp] [-r|-d max] [-o property[,...]] [-s property]...
+            [-S property]... [-t type[,...]] [filesystem|volume|snapshot] ...
+
+        set <property=value> ... <filesystem|volume|snapshot> ...
+        get [-rHp] [-d max] [-o "all" | field[,...]]
+            [-t type[,...]] [-s source[,...]]
+            <"all" | property[,...]> [filesystem|volume|snapshot|bookmark] ...
+        inherit [-rS] <property> <filesystem|volume|snapshot> ...
+        upgrade [-v]
+        upgrade [-r] [-V version] <-a | filesystem ...>
+        userspace [-Hinp] [-o field[,...]] [-s field] ...
+            [-S field] ... [-t type[,...]] <filesystem|snapshot>
+        groupspace [-Hinp] [-o field[,...]] [-s field] ...
+            [-S field] ... [-t type[,...]] <filesystem|snapshot>
+
+        mount
+        mount [-vO] [-o opts] <-a | filesystem>
+        unmount [-f] <-a | filesystem|mountpoint>
+        share <-a [nfs|smb] | filesystem>
+        unshare <-a [nfs|smb] | filesystem|mountpoint>
+
+        send [-DnPpRvLec] [-[i|I] snapshot] <snapshot>
+        send [-Lec] [-i snapshot|bookmark] <filesystem|volume|snapshot>
+        send [-nvPe] -t <receive_resume_token>
+        receive [-vnsFu] [-o <property>=<value>] ... [-x <property>] ...
+            <filesystem|volume|snapshot>
+        receive [-vnsFu] [-o <property>=<value>] ... [-x <property>] ...
+            [-d | -e] <filesystem>
+        receive -A <filesystem|volume>
+
+        allow <filesystem|volume>
+        allow [-ldug] <"everyone"|user|group>[,...] <perm|@setname>[,...]
+            <filesystem|volume>
+        allow [-ld] -e <perm|@setname>[,...] <filesystem|volume>
+        allow -c <perm|@setname>[,...] <filesystem|volume>
+        allow -s @setname <perm|@setname>[,...] <filesystem|volume>
+
+        unallow [-rldug] <"everyone"|user|group>[,...]
+            [<perm|@setname>[,...]] <filesystem|volume>
+        unallow [-rld] -e [<perm|@setname>[,...]] <filesystem|volume>
+        unallow [-r] -c [<perm|@setname>[,...]] <filesystem|volume>
+        unallow [-r] -s @setname [<perm|@setname>[,...]] <filesystem|volume>
+
+        hold [-r] <tag> <snapshot> ...
+        holds [-r] <snapshot> ...
+        release [-r] <tag> <snapshot> ...
+        diff [-FHt] <snapshot> [snapshot|filesystem]
+
+Each dataset is of the form: pool/[dataset/]*dataset[@name]
+
+For the property list, run: zfs set|get
+
+For the delegated permission list, run: zfs allow|unallow
+[vagrant@lvm ~]$ sudo zfs  rollback mypool/opt@version2 -r
+[vagrant@lvm ~]$ zfs list -t snapshot
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool/opt@version1     0B      -    24K  -
+mypool/opt@version2     0B      -    24K  -
+[vagrant@lvm ~]$ ls /opt/
+[vagrant@lvm ~]$ ls /opt/
+[vagrant@lvm ~]$ sudo -s
+[root@lvm vagrant]# echo "test add data">>/opt/data1
+[root@lvm vagrant]# exit
+exit
+[vagrant@lvm ~]$ ls /opt/
+data1
+[vagrant@lvm ~]$ sudo zfs snapshot mypool/opt@version3
+[vagrant@lvm ~]$ zfs list -t snapshot
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool/opt@version1     0B      -    24K  -
+mypool/opt@version2     0B      -    24K  -
+mypool/opt@version3     0B      -    26K  -
+[vagrant@lvm ~]$ sudo -s
+[root@lvm vagrant]# echo "add some new data">>/opt/data1
+[root@lvm vagrant]# exit
+exit
+[vagrant@lvm ~]$ zfs list -t snapshot
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool/opt@version1     0B      -    24K  -
+mypool/opt@version2     0B      -    24K  -
+mypool/opt@version3  13.5K      -    26K  -
+For the delegated permission list, run: zfs allow|unallow
+[vagrant@lvm ~]$ sudo zfs rollback mypool/opt@version3
+[vagrant@lvm ~]$
+[vagrant@lvm ~]$
+[vagrant@lvm ~]$ cat /opt/data1
+test add data
+[vagrant@lvm ~]$ zfs destroy mypool/opt@version3
+cannot destroy snapshots: permission denied
+[vagrant@lvm ~]$ sudo zfs destroy mypool/opt@version3
+[vagrant@lvm ~]$ zfs list -t snapshot
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool/opt@version1     0B      -    24K  -
+mypool/opt@version2     0B      -    24K  -
+[vagrant@lvm ~]$ ls -l /opt/
+total 1
+-rw-r--r--. 1 root root 14 Feb 15 18:41 data1
+[vagrant@lvm ~]$ sudo zfs destroy mypool/opt@version2
+[vagrant@lvm ~]$ ls -l /opt/
+total 1
+-rw-r--r--. 1 root root 14 Feb 15 18:41 data1
+[vagrant@lvm ~]$
+[vagrant@lvm ~]$
+[vagrant@lvm ~]$ sudo zfs rollback mypool/opt@version1
+[vagrant@lvm ~]$ ls -l /opt/
+total 0
+[vagrant@lvm ~]$ zfs destroy -r mypool
+cannot destroy snapshots: permission denied
+[vagrant@lvm ~]$ sudo zfs destroy -r mypool
+[vagrant@lvm ~]$ zfs list -t snapshot
+no datasets available
+[vagrant@lvm ~]$ zfs list
+NAME     USED  AVAIL  REFER  MOUNTPOINT
+mypool   108K   880M    24K  /mypool
+[vagrant@lvm ~]$ zpool status
+  pool: mypool
+ state: ONLINE
+  scan: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            sdb     ONLINE       0     0     0
+            sde     ONLINE       0     0     0
+
+errors: No known data errors
+[vagrant@lvm ~]$ zpool destroy mypool
+umount: only root can use "--types" option
+cannot unmount '/mypool': umount failed
+could not destroy 'mypool': could not unmount datasets
+[vagrant@lvm ~]$ uname zpool destroy mypool
+uname: extra operand ‘zpool’
+Try 'uname --help' for more information.
+[vagrant@lvm ~]$ sudo zpool destroy mypool
+[vagrant@lvm ~]$ exit
+exit
+
+Script done on Sat 15 Feb 2020 06:51:37 PM UTC
+[v

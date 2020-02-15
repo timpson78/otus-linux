@@ -1,0 +1,277 @@
+[vagrant@lvm vagrant]$ sudo lvremove /dev/vg_root/lv_root
+Do you really want to remove active logical volume vg_root/lv_root? [y/n]: y
+  Logical volume "lv_root" successfully removed
+[vagrant@lvm vagrant]$ vgremove /dev/vg_root
+  WARNING: Running as a non-root user. Functionality may be unavailable.
+  /run/lvm/lvmetad.socket: access failed: Permission denied
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  /dev/mapper/control: open failed: Permission denied
+  Failure to communicate with kernel device-mapper driver.
+  Incompatible libdevmapper 1.02.146-RHEL7 (2018-01-22) and kernel driver (unknown version).
+  /run/lock/lvm/V_vg_root:aux: open failed: Permission denied
+  Can't get lock for vg_root
+  Cannot process volume group vg_root
+[vagrant@lvm vagrant]$ sudo vgremove /dev/vg_root
+  Volume group "vg_root" successfully removed
+[vagrant@lvm vagrant]$ sudo pvremove /dev/sdb
+  Labels on physical volume "/dev/sdb" successfully wiped.
+[vagrant@lvm vagrant]$ lsblk
+NAME                     MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                        8:0    0   40G  0 disk
+├─sda1                     8:1    0    1M  0 part
+├─sda2                     8:2    0    1G  0 part /boot
+└─sda3                     8:3    0   39G  0 part
+  ├─VolGroup00-LogVol00  253:0    0    8G  0 lvm  /
+  └─VolGroup00-LogVol01  253:1    0  1.5G  0 lvm  [SWAP]
+sdb                        8:16   0   10G  0 disk
+sdc                        8:32   0    2G  0 disk
+├─vg_var-lv_var_rmeta_0  253:3    0    4M  0 lvm
+│ └─vg_var-lv_var        253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0 253:4    0  952M  0 lvm
+  └─vg_var-lv_var        253:7    0  952M  0 lvm  /var
+sdd                        8:48   0    1G  0 disk
+├─vg_var-lv_var_rmeta_1  253:5    0    4M  0 lvm
+│ └─vg_var-lv_var        253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1 253:6    0  952M  0 lvm
+  └─vg_var-lv_var        253:7    0  952M  0 lvm  /var
+sde                        8:64   0    1G  0 disk
+[vagrant@lvm vagrant]$ sudo lvcreate -n LogVol_Home -L 2G /dev/VolGroup00
+  Logical volume "LogVol_Home" created.
+[vagrant@lvm vagrant]$ lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk
+├─sda1                       8:1    0    1M  0 part
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:2    0    2G  0 lvm
+sdb                          8:16   0   10G  0 disk
+sdc                          8:32   0    2G  0 disk
+├─vg_var-lv_var_rmeta_0    253:3    0    4M  0 lvm
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0   253:4    0  952M  0 lvm
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sdd                          8:48   0    1G  0 disk
+├─vg_var-lv_var_rmeta_1    253:5    0    4M  0 lvm
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1   253:6    0  952M  0 lvm
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sde                          8:64   0    1G  0 disk
+[vagrant@lvm vagrant]$ mkf
+mkfifo       mkfs.btrfs   mkfs.ext2    mkfs.ext4    mkfs.xfs
+mkfs         mkfs.cramfs  mkfs.ext3    mkfs.minix
+[vagrant@lvm vagrant]$ mkf
+mkfifo       mkfs.btrfs   mkfs.ext2    mkfs.ext4    mkfs.xfs
+mkfs         mkfs.cramfs  mkfs.ext3    mkfs.minix
+[vagrant@lvm vagrant]$ sudo mkfs.xfs /dev/VolGroup00/LogVol_Home
+meta-data=/dev/VolGroup00/LogVol_Home isize=512    agcount=4, agsize=131072 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=524288, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[vagrant@lvm vagrant]$ sudo mount /dev/VolGroup00/LogVol_Home /mnt
+[vagrant@lvm vagrant]$ sudo cp -aR /home/* /mnt/
+[vagrant@lvm vagrant]$ ls -l /mnt/
+total 0
+drwx------. 3 vagrant vagrant 95 Feb 14 08:57 vagrant
+[vagrant@lvm vagrant]$ ls -l /home/
+total 0
+drwx------. 3 vagrant vagrant 95 Feb 14 08:57 vagrant
+[vagrant@lvm vagrant]$ sudo rm -rf /home/*
+[vagrant@lvm vagrant]$ ls -l /home/
+total 0
+[vagrant@lvm vagrant]$ sudo umount /mnt
+[vagrant@lvm vagrant]$ sudo mount /dev/VolGroup00/LogVol_Home /home/
+xfs defaults 0 0" >> /etc/fstabho "`blkid | grep Home | awk '{print $2}'` /home
+bash: /etc/fstab: Permiblkid
+[vagrant@lvm vagrant]$ sudo blkid
+/dev/sda2: UUID="570897ca-e759-4c81-90cf-389da6eee4cc" TYPE="xfs"
+/dev/sda3: UUID="vrrtbx-g480-HcJI-5wLn-4aOf-Olld-rC03AY" TYPE="LVM2_member"
+/dev/sdc: UUID="Qpuuuv-1RKw-PIqa-XKZE-jE1u-P7Ka-noIpXs" TYPE="LVM2_member"
+/dev/sdd: UUID="evoMnZ-sudo -s
+ults 0 0" >> /etc/fstabho "`blkid | grep Home | awk '{print $2}'` /home xfs defa
+[root@lvm vagrant]# exitog  echo "`sudo blkid | grep Home | awk '{print $2}'` /home ap"                                                                                                  echo "`sudo blkid | grep Home | awk '{print $2}'` / [vagrant@lvm vagrant]$ sudo cat /etc/fstab | grep home
+UUID="bbaa4c0b-193b-4431-b489-6361f73dbae4" /home xfs defaults 0 0
+[vagrant@lvm vagrant]$ sudo touch /home/file{1..20} | grep Home | awk '{print $2}'` /h4"                                   ublkid | grep Home | awk '{print $2}'` /home
+[vagrant@lvm vagrant]$ ls -l /home: sblkid | grep Home | awk '{print $2}'` /home xYPE="xfs"
+total 0aults 0 0" >> /etc/fstabho "`blkid | grep Home | awk '{print $2}'` /home x
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file1
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file10
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file11
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file12
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file13
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file14
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file15
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file16
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file17
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file18
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file19
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file2
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file20
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file3
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file4
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file5
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file6
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file7
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file8
+-rw-r--r--. 1 root    root     0 Feb 14 17:31 file9
+drwx------. 3 vagrant vagrant 95 Feb 14 08:57 vagrant
+[vagrant@lvm vagrant]$ lvcreate -L 100MB -s -n home_snap /dev/Vo
+  WARNING: Running as a non-root user. Functionality may be unavailable.
+  /run/lvm/lvmetad.socket: access failed: Permission denied
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  /dev/mapper/control: open failed: Permission denied
+  Failure to communicate with kernel device-mapper driver.
+  Incompatible libdevmapper 1.02.146-RHEL7 (2018-01-22) and kernel driver (unknown version).
+modprobe: ERROR: could not insert 'dm_snapshot': Operation not permitted
+  /usr/sbin/modprobe failed: 1
+  snapshot: Required device-mapper target(s) not detected in your kernel.
+  Run `lvcreate --help' for more information.
+Home
+  WARNING: Running as a non-root user. Functionality may be unavailable.
+  /run/lvm/lvmetad.socket: access failed: Permission denied
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  /dev/mapper/control: open failed: Permission denied
+  Failure to communicate with kernel device-mapper driver.
+  Incompatible libdevmapper 1.02.146-RHEL7 (2018-01-22) and kernel driver (unknown version).
+modprobe: ERROR: could not insert 'dm_snapshot': Operation not permitted                                       lvcreate -L 100MB -s -n home_snap /dev/VolGroup00/LogVol_Home
+  Rounding up size to full physical extent 128.00 MiB home_snap /dev/VolGroup00/LogVol_Home                                                                                              dlvcreate -L 100MB -s -n home_snap /dev/VolGroup00/L  Logical volume "home_snap" created.rget(s) not detected in your kernel.                               ulvcreate -L 100MB -s -n home_snap /dev/VolGroup00/LogVol_Home
+[vagrant@lvm vagrant]$ vgscreate -L 100MB -s -n home_snap /dev/VolGroup00/LogVol_Home
+  WARNING: Running as a non-root user. Functionality may be unavailable./LogVol_H
+  /run/lvm/lvmetad.socket: access failed: Permission denied
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  /dev/mapper/control: open failed: Permission denied
+  Failure to communicate with kernel device-mapper driver.
+  Incompatible libdevmapper 1.02.146-RHEL7 (2018-01-22) and kernel driver (unknown version).
+[vagrant@lvm vagrant]$ sudo vgs
+  VG         #PV #LV #SN Attr   VSize   VFree
+  VolGroup00   1   4   1 wz--n- <38.97g 27.34g
+  vg_var       2   1   0 wz--n-   2.99g  1.12g
+[vagrant@lvm vagrant]$ lsblk
+NAME                            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                               8:0    0   40G  0 disk
+├─sda1                            8:1    0    1M  0 part
+├─sda2                            8:2    0    1G  0 part /boot
+└─sda3                            8:3    0   39G  0 part
+  ├─VolGroup00-LogVol00         253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01         253:1    0  1.5G  0 lvm  [SWAP]
+  ├─VolGroup00-LogVol_Home-real 253:8    0    2G  0 lvm
+  │ ├─VolGroup00-LogVol_Home    253:2    0    2G  0 lvm  /home
+  │ └─VolGroup00-home_snap      253:10   0    2G  0 lvm
+  └─VolGroup00-home_snap-cow    253:9    0  128M  0 lvm
+    └─VolGroup00-home_snap      253:10   0    2G  0 lvm
+sdb                               8:16   0   10G  0 disk
+sdc                               8:32   0    2G  0 disk
+├─vg_var-lv_var_rmeta_0         253:3    0    4M  0 lvm
+│ └─vg_var-lv_var               253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0        253:4    0  952M  0 lvm
+  └─vg_var-lv_var               253:7    0  952M  0 lvm  /var
+sdd                               8:48   0    1G  0 disk
+├─vg_var-lv_var_rmeta_1         253:5    0    4M  0 lvm
+│ └─vg_var-lv_var               253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1        253:6    0  952M  0 lvm
+  └─vg_var-lv_var               253:7    0  952M  0 lvm  /var
+sde                               8:64   0    1G  0 disk
+[vagrant@lvm vagrant]$ rm -f /home/file{11..20}
+rm: cannot remove ‘/home/file11’: Permission denied
+rm: cannot remove ‘/home/file12’: Permission denied
+rm: cannot remove ‘/home/file13’: Permission denied
+rm: cannot remove ‘/home/file14’: Permission denied
+rm: cannot remove ‘/home/file15’: Permission denied
+rm: cannot remove ‘/home/file16’: Permission denied
+rm: cannot remove ‘/home/file17’: Permission denied
+rm: cannot remove ‘/home/file18’: Permission denied
+rm: cannot remove ‘/home/file19’: Permission denied
+rm: cannot remove ‘/home/file20’: Permission denied
+[vagrant@lvm vagrant]$ sudo rm -f /home/file{11..20}
+[vagrant@lvm vagrant]$ lsblk
+NAME                            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                               8:0    0   40G  0 disk
+├─sda1                            8:1    0    1M  0 part
+├─sda2                            8:2    0    1G  0 part /boot
+└─sda3                            8:3    0   39G  0 part
+  ├─VolGroup00-LogVol00         253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01         253:1    0  1.5G  0 lvm  [SWAP]
+  ├─VolGroup00-LogVol_Home-real 253:8    0    2G  0 lvm
+  │ ├─VolGroup00-LogVol_Home    253:2    0    2G  0 lvm  /home
+  │ └─VolGroup00-home_snap      253:10   0    2G  0 lvm
+  └─VolGroup00-home_snap-cow    253:9    0  128M  0 lvm
+    └─VolGroup00-home_snap      253:10   0    2G  0 lvm
+sdb                               8:16   0   10G  0 disk
+sdc                               8:32   0    2G  0 disk
+├─vg_var-lv_var_rmeta_0         253:3    0    4M  0 lvm
+│ └─vg_var-lv_var               253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0        253:4    0  952M  0 lvm
+  └─vg_var-lv_var               253:7    0  952M  0 lvm  /var
+sdd                               8:48   0    1G  0 disk
+├─vg_var-lv_var_rmeta_1         253:5    0    4M  0 lvm
+│ └─vg_var-lv_var               253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1        253:6    0  952M  0 lvm
+  └─vg_var-lv_var               253:7    0  952M  0 lvm  /var
+sde                               8:64   0    1G  0 disk
+[vagrant@lvm vagrant]$ sudo mount /dev/VolGroup00/home_snap /mnt
+mount: wrong fs type, bad option, bad superblock on /dev/mapper/VolGroup00-home_snap,
+       missing codepage or helper program, or other error
+
+       In some cases useful info is found in syslog - try
+       dmesg | tail or so.
+[vagrant@lvm vagrant]$
+[vagrant@lvm vagrant]$ df -H
+Filesystem                          Size  Used Avail Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00     8.6G  797M  7.8G  10% /
+devtmpfs                            115M     0  115M   0% /dev
+tmpfs                               124M     0  124M   0% /dev/shm
+tmpfs                               124M  4.7M  119M   4% /run
+tmpfs                               124M     0  124M   0% /sys/fs/cgroup
+/dev/mapper/vg_var-lv_var           966M  142M  758M  16% /var
+/dev/sda2                           1.1G   64M  1.0G   6% /boot
+/dev/mapper/VolGroup00-LogVol_Home  2.2G   34M  2.2G   2% /home
+[vagrant@lvm vagrant]$
+[vagrant@lvm vagrant]$ mount: wrong fs type, bad option, bad superblock on
+bash: mount:: command not found
+[vagrant@lvm vagrant]$ sudo unmount /home
+sudo: unmount: command not found
+[vagrant@lvm vagrant]$ sudo umount /home
+[vagrant@lvm vagrant]$ lvconvert --merge /dev/VolGroup00/home_snap
+  WARNING: Running as a non-root user. Functionality may be unavailable.
+  /run/lvm/lvmetad.socket: access failed: Permission denied
+  WARNING: Failed to connect to lvmetad. Falling back to device scanning.
+  /dev/mapper/control: open failed: Permission denied
+  Failure to communicate with kernel device-mapper driver.
+  Incompatible libdevmapper 1.02.146-RHEL7 (2018-01-22) and kernel driver (unknown version).
+  /run/lock/lvm/V_VolGroup00:aux: open failed: Permission denied
+  Can't get lock for VolGroup00
+  Cannot process volume group VolGroup00
+[vagrant@lvm vagrant]$ sudo lvconvert --merge /dev/VolGroup00/home_snap
+  Merging of volume VolGroup00/home_snap started.
+  VolGroup00/LogVol_Home: Merged: 100.00%
+
+[vagrant@lvm vagrant]$
+[vagrant@lvm vagrant]$ sudo mount /home
+[vagrant@lvm vagrant]$ lsblk
+NAME                       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                          8:0    0   40G  0 disk
+├─sda1                       8:1    0    1M  0 part
+├─sda2                       8:2    0    1G  0 part /boot
+└─sda3                       8:3    0   39G  0 part
+  ├─VolGroup00-LogVol00    253:0    0    8G  0 lvm  /
+  ├─VolGroup00-LogVol01    253:1    0  1.5G  0 lvm  [SWAP]
+  └─VolGroup00-LogVol_Home 253:2    0    2G  0 lvm  /home
+sdb                          8:16   0   10G  0 disk
+sdc                          8:32   0    2G  0 disk
+├─vg_var-lv_var_rmeta_0    253:3    0    4M  0 lvm
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_0   253:4    0  952M  0 lvm
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sdd                          8:48   0    1G  0 disk
+├─vg_var-lv_var_rmeta_1    253:5    0    4M  0 lvm
+│ └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+└─vg_var-lv_var_rimage_1   253:6    0  952M  0 lvm
+  └─vg_var-lv_var          253:7    0  952M  0 lvm  /var
+sde                          8:64   0    1G  0 disk
+

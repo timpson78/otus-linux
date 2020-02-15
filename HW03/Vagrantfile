@@ -69,9 +69,22 @@ Vagrant.configure("2") do |config|
             mkdir -p ~root/.ssh
             cp ~vagrant/.ssh/auth* ~root/.ssh
             yum install -y mdadm smartmontools hdparm gdisk
+	    /vagrant/lvm1_script.sh
 	 SHELL
-     
-      end
+
+ 	config.vm.provosion: reload 
+
+	box.vm.provision "shell", inline: <<-SHELL
+	    /vagrant/lvm2_script.sh
+	 SHELL
+
+	config.vm.provosion: reload 
+  	
+	box.vm.provision "shell", inline: <<-SHELL
+	    /vagrant/lvm3_script.sh
+	 SHELL
+
+        end
     end
   end
 
