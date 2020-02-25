@@ -35,7 +35,7 @@ a               		 startdate=`date +%d/%b/%Y:%H:%M:%S`;
 	echo "The top  dest addresses: $groupby_dest_address"
 	echo "Errors: $group_errors"
 	mail_text="The roportfrom date: $startdate The top src addresses: $groupby_src_address The top dest addresses: $groupby_dest_address Errors: $group_errors" 
-	echo $mail_text | sendmail tim@localhost
+	echo $mail_text | sendmail root@localhost
 	trap "date +%d/%b/%Y:%H:%M:%S > ./$endatefile" SIGINT SIGHUP SIGKILL EXIT
 
 
