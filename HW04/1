@@ -1,0 +1,17 @@
+#/bin/bash
+logfile=./access.log
+n=10
+if [[ -z "$1" ]] 
+then
+	startdate=`date +%d/%b/%Y:%H:%M:%S`
+
+else
+	startdate=$1
+fi	
+
+groupbyip=`awk -v startdate="$startdate" '$4>"["startdate' $logfile | awk '{a[$1]++;}END{for (i in a) print a[i]" "i | "$1 sort -n";}'`
+
+echo $groupbyip
+#for i in $varlog  
+#do 
+#done
