@@ -1,0 +1,7 @@
+#This is readme file for lsof.bh script
+
+Please, use -p argument to print information about all open files
+example:
+ps ax 
+./lsof.sh -p <pid>
+
