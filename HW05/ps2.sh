@@ -1,8 +1,12 @@
 #!/bin/bash
 
 allproc=`ls /proc/ | grep -E *[0-9]| sort -n`
+#echo $allproc
 
+#array=$('echo ${allproc'})
 procArray=($allproc)
+#IFS=' ' read -a array <<< "$allproc"
+#array=$(echo $allproc | tr " " "\n")
 getProcInfo() {
 	if [[ -f "/proc/$1/stat" ]];
 	then
@@ -17,7 +21,12 @@ do
 	procInfoArray=($procInfo)
 	if [[ $procInfo != "" ]];
 	then	
-		printf "%10s %5s %5s %5s %10s %10s %10s %10s %20s \n" ${procArray[$i]} ${procInfoArray[3]} ${procInfoArray[2]} ${procInfoArray[5]} \
-						${procInfoArray[18]} ${procInfoArray[17]} ${procInfoArray[23]} ${procInfoArray[21]} ${procInfoArray[1]}  
+		printf "%10s %5s %5s %5s %10s %10s %10s %10s %20s \n" ${procArray[$i]} ${procInfoArray[3]} ${procInfoArray[2]} ${procInfoArray[5]} ${procInfoArray[18]} ${procInfoArray[17]} ${procInfoArray[23]} ${procInfoArray[21]} ${procInfoArray[1]}  
 	fi
 done
+
+
+#for s in "${procArray}"; do 
+#    echo "_  $s"
+#done
+
