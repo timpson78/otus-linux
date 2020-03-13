@@ -1,0 +1,101 @@
+Mar 10 11:58:04 test1 systemd[1]: Started Check PMIE instances are running.
+Mar 10 11:59:28 test1 sssd[kcm][29152]: Shutting down
+Mar 10 12:00:02 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 12:00:03 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 12:03:23 test1 systemd[1]: Starting SSSD Kerberos Cache Manager...
+Mar 10 12:03:23 test1 systemd[1]: Started SSSD Kerberos Cache Manager.
+Mar 10 12:03:24 test1 sssd[kcm][30795]: Starting up
+Mar 10 12:03:31 test1 pcp-pmie[2846]: Severe demand for real memory 77pgsout/s@test1
+Mar 10 12:10:02 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 12:10:03 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 12:10:54 test1 sssd[kcm][30795]: Shutting down
+Mar 10 12:11:56 test1 systemd[1]: Starting dnf makecache...
+Mar 10 12:12:04 test1 dnf[30926]: Updating Subscription Management repositories.
+Mar 10 12:12:04 test1 dnf[30926]: Unable to read consumer identity
+Mar 10 12:12:04 test1 dnf[30926]: This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.
+Mar 10 12:12:06 test1 dnf[30926]: CentOS-8 - AppStream                            4.2 kB/s | 4.3 kB     00:01
+Mar 10 12:12:07 test1 dnf[30926]: CentOS-8 - Base                                 7.0 kB/s | 3.8 kB     00:00
+Mar 10 12:12:07 test1 dnf[30926]: CentOS-8 - Extras                               3.2 kB/s | 1.5 kB     00:00
+Mar 10 12:12:10 test1 dnf[30926]: CentOS-8 - PowerTools                           1.7 kB/s | 4.3 kB     00:02
+Mar 10 12:12:10 test1 dnf[30926]: Docker CE Stable - x86_64                       7.9 kB/s | 3.5 kB     00:00
+Mar 10 12:12:11 test1 dnf[30926]: Extra Packages for Enterprise Linux 8 - x86_64   91 kB/s |  32 kB     00:00
+Mar 10 12:12:14 test1 dnf[30926]: Oracle Linux / RHEL / CentOS-8 / x86_64 - Virtu  62  B/s | 181  B     00:02
+Mar 10 12:12:15 test1 dnf[30926]: Metadata cache created.
+Mar 10 12:12:15 test1 systemd[1]: Started dnf makecache.
+Mar 10 12:13:31 test1 pcp-pmie[2846]: Severe demand for real memory 16.3pgsout/s@test1
+Mar 10 12:20:02 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 12:20:03 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 12:20:36 test1 systemd[1]: Starting SSSD Kerberos Cache Manager...
+Mar 10 12:20:37 test1 systemd[1]: Started SSSD Kerberos Cache Manager.
+Mar 10 12:20:37 test1 sssd[kcm][31224]: Starting up
+Mar 10 12:25:02 test1 systemd[1]: Starting Check pmlogger instances are running...
+ALERT
+Mar 10 12:25:05 test1 systemd[1]: Started Check pmlogger instances are running.
+Mar 10 12:28:02 test1 systemd[1]: Starting Check PMIE instances are running...
+Mar 10 12:28:03 test1 systemd[1]: Started Check PMIE instances are running.
+Mar 10 12:28:07 test1 sssd[kcm][31224]: Shutting down
+Mar 10 12:30:02 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 12:30:02 test1 systemd[1]: Starting Poll log processing...
+Mar 10 12:30:02 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 12:30:03 test1 systemd[1]: Started Poll log processing.
+Mar 10 12:32:15 test1 dbus-daemon[1013]: [system] Activating via systemd: service name='org.freedesktop.PackageKit' unit='packagekit.service' requested by ':1.3403' (uid=1000 pid=32046 comm="/usr/libexec/pk-command-not-found mjdir httpd " label="unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023")
+Mar 10 12:32:16 test1 systemd[1]: Starting PackageKit Daemon...
+Mar 10 12:32:17 test1 dbus-daemon[1013]: [system] Successfully activated service 'org.freedesktop.PackageKit'
+Mar 10 12:32:17 test1 systemd[1]: Started PackageKit Daemon.
+Mar 10 12:40:00 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 12:40:00 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 12:45:23 test1 systemd-logind[1179]: New session 5 of user root.
+Mar 10 12:45:23 test1 systemd[1]: Started Session 5 of user root.
+Mar 10 12:45:27 test1 su[32269]: (to tim) root on pts/2
+Mar 10 12:50:00 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 12:50:01 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 12:55:01 test1 systemd[1]: Starting Check pmlogger instances are running...
+Mar 10 12:55:03 test1 systemd[1]: Started Check pmlogger instances are running.
+Mar 10 12:58:01 test1 systemd[1]: Starting Check PMIE instances are running...
+Mar 10 12:58:01 test1 systemd[1]: Started Check PMIE instances are running.
+Mar 10 13:00:01 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 13:00:02 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 13:00:09 test1 kernel: IPv6: ADDRCONF(NETDEV_UP): vboxnet2: link is not ready
+Mar 10 13:00:09 test1 avahi-daemon[997]: Joining mDNS multicast group on interface vboxnet2.IPv4 with address 192.168.11.1.
+Mar 10 13:00:09 test1 avahi-daemon[997]: New relevant interface vboxnet2.IPv4 for mDNS.
+Mar 10 13:00:09 test1 avahi-daemon[997]: Registering new address record for 192.168.11.1 on vboxnet2.IPv4.
+Mar 10 13:00:09 test1 NetworkManager[1251]: <info>  [1583859609.9347] manager: (vboxnet2): new Ethernet device (/org/freedesktop/NetworkManager/Devices/7)
+Mar 10 13:00:10 test1 systemd-udevd[1614]: link_config: autonegotiation is unset or enabled, the speed and duplex are not writable.
+Mar 10 13:00:11 test1 kernel: VBoxNetFlt: attached to 'vboxnet2' / 0a:00:27:00:00:02
+Mar 10 13:00:11 test1 kernel: IPv6: ADDRCONF(NETDEV_CHANGE): vboxnet2: link becomes ready
+Mar 10 13:00:11 test1 NetworkManager[1251]: <info>  [1583859611.9277] device (vboxnet2): carrier: link connected
+Mar 10 13:00:12 test1 kernel: device vboxnet2 entered promiscuous mode
+Mar 10 13:00:13 test1 avahi-daemon[997]: Joining mDNS multicast group on interface vboxnet2.IPv6 with address fe80::800:27ff:fe00:2.
+Mar 10 13:00:13 test1 avahi-daemon[997]: New relevant interface vboxnet2.IPv6 for mDNS.
+Mar 10 13:00:13 test1 avahi-daemon[997]: Registering new address record for fe80::800:27ff:fe00:2 on vboxnet2.*.
+Mar 10 13:01:31 test1 pcp-pmie[2846]: High aggregate context switch rate 13087ctxsw/s@test1
+Mar 10 13:01:45 test1 systemd[1]: Starting SSSD Kerberos Cache Manager...
+Mar 10 13:01:45 test1 systemd[1]: Started SSSD Kerberos Cache Manager.
+Mar 10 13:01:45 test1 sssd[kcm][5484]: Starting up
+Mar 10 13:03:31 test1 pcp-pmie[2846]: Severe demand for real memory 21.5pgsout/s@test1
+Mar 10 13:05:31 test1 pcp-pmie[2846]: File system is filling up 96%used[/dev/mapper/root-root]@test1
+Mar 10 13:10:00 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 13:10:00 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 13:11:46 test1 sssd[kcm][5484]: Shutting down
+Mar 10 13:12:20 test1 systemd[1]: Starting dnf makecache...
+Mar 10 13:12:26 test1 dnf[5844]: Updating Subscription Management repositories.
+Mar 10 13:12:26 test1 dnf[5844]: Unable to read consumer identity
+Mar 10 13:12:26 test1 dnf[5844]: This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.
+Mar 10 13:12:27 test1 dnf[5844]: Metadata cache refreshed recently.
+Mar 10 13:12:27 test1 systemd[1]: Started dnf makecache.
+Mar 10 13:13:31 test1 pcp-pmie[2846]: Severe demand for real memory 22.4pgsout/s@test1
+Mar 10 13:20:00 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 13:20:00 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 13:23:31 test1 pcp-pmie[2846]: Severe demand for real memory 2.83pgsout/s@test1
+Mar 10 13:25:01 test1 systemd[1]: Starting Check pmlogger instances are running...
+Mar 10 13:25:04 test1 systemd[1]: Started Check pmlogger instances are running.
+Mar 10 13:28:01 test1 systemd[1]: Starting Check PMIE instances are running...
+Mar 10 13:28:01 test1 systemd[1]: Started Check PMIE instances are running.
+Mar 10 13:30:01 test1 systemd[1]: Starting system activity accounting tool...
+Mar 10 13:30:01 test1 systemd[1]: Starting Poll log processing...
+Mar 10 13:30:01 test1 systemd[1]: Started system activity accounting tool.
+Mar 10 13:30:01 test1 systemd[1]: Started Poll log processing.
+Mar 10 13:32:41 test1 dbus-daemon[1013]: [system] Activating via systemd: service name='net.reactivated.Fprint' unit='fprintd.service' requested by ':1.3442' (uid=0 pid=6702 comm="sudo tail -n 100 /var/log/messages " label="unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023")
+Mar 10 13:32:41 test1 systemd[1]: Starting Fingerprint Authentication Daemon...
+Mar 10 13:32:42 test1 dbus-daemon[1013]: [system] Successfully activated service 'net.reactivated.Fprint'
+Mar 10 13:32:42 test1 systemd[1]: Started Fingerprint Authentication Daemon.
