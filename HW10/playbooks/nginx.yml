@@ -1,0 +1,78 @@
+---
+- name: deploy nginx
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    nginx_version: 2.6
+    nginx_listen_port: 8080
+    tmp_vars:
+      - tmp 1
+      - tmp 2
+      - tmp 3
+      - tmp 4
+  
+  tasks:
+
+    - name: get hostname
+      shell: 'cat /etc/hostname'
+      register: my_hostname
+    - name: Install EPEL repo
+      yum:
+        name: epel-release
+        state: present
+    
+    - name: yum install nginx
+      yum: 
+        name: nginx
+        state: latest
+      when: ansible_os_family  == 'RedHat'
+      notify: 
+        - restart nginx
+      tags: 
+        - nginx-package
+        - package
+    
+    - name: apt install nginx
+      apt:
+        name: nginx
+        state: latest
+      when: ansible_os_family == 'Debian'      
+      notify: 
+        - restart nginx
+      tags: 
+        - nginx-package
+        - package  
+
+    - name: create Nginx config from template
+      template:
+        src: ../templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf 
+      notify:
+        - reload nginx  
+      tags: nginx-configuration    
+
+    - debug:      
+        msg:  '{{my_hostname.stdout}} - {{item}}'
+      loop: "{{tmp_vars}}"
+  
+  handlers:
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+    
+    - name: reload nginx
+      systemd: 
+        name: nginx
+        state: reloaded  
+  
+  
+
+
+
+        
+
+
+
